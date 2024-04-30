@@ -504,3 +504,17 @@ video {
 .static {
   position: static;
 }
+
+.container{
+  background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNGf2VIdh0C9V-ZRYZ9M1YPhIeFA1yl392_gFv5sx1jBh8_Vj3B8rCSCyVPaII4Q7Qwhw&usqp=CAU);
+  background-size: contain;
+  background-position: center;
+}
+.homepage{
+  height: 90%;
+  width: 100%;
+  background-image: url(https://brand24.com/blog/wp-content/uploads/2022/08/What-is-Personal-Selling-Definition-Process.png);
+  background-size: cover;
+  background-position: center;
+  object-fit: cover;
+}
