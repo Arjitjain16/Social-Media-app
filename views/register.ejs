@@ -4,18 +4,22 @@
 <div class="upper-cont h-full w-full  px-[38vmax] py-[2vmax]">
     <div class="register-cont h-[35vmax] bg-slate-400 w-[25vmax] flex items-center justify-center rounded-[1.4vmax] ">
 
-        <form action="" class="px-8 py-10">
+        <form action="/sign-user" class="px-8 py-10" method="post">
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Name</label>
+                <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Enter your Name" name="name" >
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Username</label>
+                <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Enter your userName" name="username">
+            </div>
             <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Enter your email">
+                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Enter your email" name="email">
             </div>
             <div class="mb-3">
                 <label for="inputPassword5" class="form-label">Password</label>
-                <input type="password" id="inputPassword5" class="form-control" aria-describedby="passwordHelpBlock" placeholder="Enter your password">
-            </div>
-            <div class="mb-3">
-                <label for="inputPassword5" class="form-label">Confirmed Password</label>
-                <input type="password" id="inputPassword5" class="form-control" aria-describedby="passwordHelpBlock" placeholder="Enter your Confirmed password">
+                <input type="password" id="inputPassword5" class="form-control" aria-describedby="passwordHelpBlock" placeholder="Enter your password" name="password">
             </div>
             <div class="mb-3">
                 <p><a href="/login" class="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Already registered</a></p>
