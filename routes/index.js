@@ -13,9 +13,13 @@ router.get('/register', function(req, res, next) {
 });
 
 router.post("/sign-user", async function(req, res){
-  const users = new User(req.body)
-  await users.save()
-  redirect("/login")
+  try {
+    const users = User(req.body)
+    await users.save()
+    res.redirect("/login")
+  } catch (error) {
+    res.send(error);
+  }
 })
 
 router.get('/login', function(req, res, next) {
