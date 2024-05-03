@@ -5,6 +5,11 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const db = require('./models/db')
 
+const passport = require("passport")
+const  session = require("express-session")
+const User = require("./models/schema")
+
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
@@ -19,6 +24,19 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+
+app.use(
+  session({
+    saveUninitialized : true,
+    resave : true,
+    secret : "hq123b"
+  })
+)
+app.use(passport.initialize())
+app.use(passport.session()),
+passport.serializeUser(User.serializeUser())
+passport.deserializeUser(User.deserializeUser())
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
