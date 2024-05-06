@@ -32,6 +32,18 @@ router.post("/sign-user", async function(req, res){
 router.get('/login', function(req, res, next) {
   res.render('login');
 });
+router.post('/login-user', passport.authenticate('local', {
+  successRedirect : "/profile",
+  failureRedirect : "/login"
+}))
+
+//logout
+
+router.get("/logout-user", function(req, res, next){
+  req.logout(() =>{
+    res.redirect("/login")
+  })
+})
 
 // profile
 router.get('/profile', function(req, res, next) {
@@ -43,4 +55,12 @@ router.get('/about', function(req, res, next) {
   res.render('about');
 });
 
+
+function isLoggedIn(req, res, next){
+  if (req.isAuthenticated()){
+    next();
+  }else{
+    res.redirect("/login")
+  }
+}
 module.exports = router;
