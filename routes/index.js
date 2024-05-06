@@ -29,13 +29,16 @@ router.post("/sign-user", async function(req, res){
   }
 })
 
+//login
 router.get('/login', function(req, res, next) {
   res.render('login');
 });
-router.post('/login-user', passport.authenticate('local', {
-  successRedirect : "/profile",
-  failureRedirect : "/login"
-}))
+
+router.post("/login-user", passport.authenticate("local",
+{successRedirect : "/profile", failureRedirect : "/login"}), 
+function(req, res, next) {}
+)
+
 
 //logout
 
@@ -46,7 +49,7 @@ router.get("/logout-user", function(req, res, next){
 })
 
 // profile
-router.get('/profile', function(req, res, next) {
+router.get('/profile',isLoggedIn, function(req, res, next) {
   res.render('profile');
 });
 
