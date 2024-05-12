@@ -8,15 +8,15 @@ passport.use(new LocalStrategy(User.authenticate()))
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index');
+  res.render('index', {user: req.user});
 });
 
 // register route
 router.get('/register', function(req, res, next) {
-  res.render('register');
+  res.render('register', {user: req.user});
 });
 
-router.post("/sign-user", async function(req, res){
+router.post("/register-user", async function(req, res){
   try {
     // const users = User(req.body)
     // await users.save()
@@ -31,7 +31,7 @@ router.post("/sign-user", async function(req, res){
 
 //login
 router.get('/login', function(req, res, next) {
-  res.render('login');
+  res.render('login', {user: req.user});
 });
 
 router.post("/login-user", passport.authenticate("local",
@@ -50,18 +50,22 @@ router.get("/logout-user", function(req, res, next){
 
 // profile
 router.get('/profile',isLoggedIn, function(req, res, next) {
-  res.render('profile');
+  res.render('profile', {user: req.user});
 });
 
+// user update 
+router.get("/update-user/:id", function(req, res, next){
+  res.render("userupdate" , {user: req.user})
+})
 
 router.get('/about', function(req, res, next) {
-  res.render('about');
+  res.render('about', {user: req.user});
 });
 
 
 function isLoggedIn(req, res, next){
   if (req.isAuthenticated()){
-    next();
+    return next();
   }else{
     res.redirect("/login")
   }

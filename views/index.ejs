@@ -1,14 +1,17 @@
 <%- include("./partials/header") %>
 <%- include("./partials/navbar") %>
-<div class="container flex items-center justify-center py-5 h-full w-full">
-  <div class="homepage h-[33vmax] w-full flex justify-between items-center flex-col">
-    <h1 class="text-5xl font-bold text-[#A68CF9]">This is My Homepage</h1>
 
-    <div class="journey-start flex flex-row items-center gap-32 w-full px-[30vmax]">
-      <a href="/login" class="bg-[#A289F3]  p-[1.6vmax] text-[1vmax] font-bold text-white rounded-[1vmax] ">Continue Surfing</a>
-      <a href="/register" class="bg-[#A289F3]  p-[1.6vmax] text-[1vmax] font-bold text-white rounded-[1vmax]">Start your journey</a>
-    </div>
-
+<div class="home h-[90%] w-[100%]">
+  <div class=" rounded-xl w-[80%] py-[10%] bg-blue-200 m-auto">
+    <h1 class="text-center text-8xl font-extrabold text-blue-400">This is Homepage</h1>
+  
+    <p class="flex justify-center gap-x-5 mt-10 ">
+      <a class="hover:bg-blue-900 rounded text-white py-3 px-5 bg-[#5279F4]" href="/login">Continue Surfing</a>
+      <a class=" hover:bg-blue-900 rounded text-white py-3 px-5 bg-[#5279F4]" href="/register">Start Your Journey
+        Today</a>
+  
+    </p>
   </div>
 </div>
+
 <%- include("./partials/footer") %>

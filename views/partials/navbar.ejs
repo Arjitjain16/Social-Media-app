@@ -1,11 +1,25 @@
-<nav class="w-full bg-[#111827] text-white flex justify-between px-3 py-1">
-    <div class="logo flex item-center justify-center gap-9 py-3 text-2xl text-white font-bold px-2">
+<nav class="w-full bg-[#2941ca] text-white flex justify-between px-3 py-1">
+    <div class="logo flex item-center justify-center gap-3 py-3 text-2xl text-white font-bold px-2">
+        <img class="h-7 w-7 rounded-md" src="https://images.unsplash.com/photo-1562577309-4932fdd64cd1?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Sociall">
         <h1>Socials</h1>
     </div>
     <ul class="flex item-center justify-center gap-9 py-3 text-2xl text-white font-bold">
-        <a href="/">Home</a>
+
+        <% if(user){ %>
+            <a href="/profile">Home</a>
+            <a href="/logout-user">Logout</a>
+        <% }else{ %>
+            <a href="/">Home</a>
+            <a href="/login">Login</a>
+        <% } %>
+
+        <a href="/about">About</a>
+
+
+        <!-- <a href="/">Home</a>
         <a href="/login">Login</a>
         <a href="/about">About Us</a>
+        <a href="/logout-user">Logout</a> -->
     </ul>
     <div></div>
 </nav>
