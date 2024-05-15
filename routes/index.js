@@ -58,6 +58,24 @@ router.get("/update-user/:id", function(req, res, next){
   res.render("userupdate" , {user: req.user})
 })
 
+// reset password 
+
+router.get("/reset-password/:id", isLoggedIn, function (req, res, next) {
+  res.render("userresetpassword", { user: req.user });
+});
+router.post("/reset-password/:id", isLoggedIn, async function (req, res, next) {
+  try {
+      await req.user.changePassword(
+          req.body.oldpassword,
+          req.body.newpassword
+      );
+      req.user.save();
+      res.redirect(`/update-user/${req.user._id}`);
+  } catch (error) {
+      res.send(error);
+  }
+});
+
 router.get('/about', function(req, res, next) {
   res.render('about', {user: req.user});
 });
