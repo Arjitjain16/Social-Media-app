@@ -53,7 +53,7 @@ router.get('/profile',isLoggedIn, function(req, res, next) {
   res.render('profile', {user: req.user});
 });
 
-// user update 
+// user update
 router.get("/update-user/:id", function(req, res, next){
   res.render("userupdate" , {user: req.user})
 })
@@ -73,6 +73,44 @@ router.post("/reset-password/:id", isLoggedIn, async function (req, res, next) {
       res.redirect(`/update-user/${req.user._id}`);
   } catch (error) {
       res.send(error);
+  }
+});
+
+// FORGET PASSWORD 
+
+router.get('/forget-email', function(req, res, next) {
+  res.render('userforgetemail', {user: req.user});
+});
+
+router.post('/forget-email', async function(req, res, next) {
+
+  try {
+    const user = await User.findOne({email : req.body.email})
+    if(user){
+      res.redirect(`/forget-password/${user._id}`)
+    }
+    else{
+      res.redirect("/forget-email")
+    }
+  } catch (error) {
+    console.log(error);
+  }
+  
+});
+
+// forgot password 
+
+router.get('/forget-password/:id', function(req, res, next) {
+  res.render('userforgetpassword', {user: req.user, id: req.params.id});
+});
+router.post('/forget-password/:id', async function(req, res, next) {
+  try {
+    const user = await User.findById(req.params.id)
+    await user.setPassword(req.body.password)
+    await user.save()
+    res.redirect('/login')
+  } catch (error) {
+    console.log(error);
   }
 });
 
