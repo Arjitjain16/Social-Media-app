@@ -3,6 +3,10 @@ var router = express.Router();
 var User = require("../models/schema")
 const passport = require("passport")
 const LocalStrategy = require("passport-local")
+const fs = require("fs");
+const path = require('path');
+const upload = require('../Utils/multer').single('profilepic');
+
 
 passport.use(new LocalStrategy(User.authenticate()))
 
@@ -55,7 +59,7 @@ router.get('/profile',isLoggedIn, function(req, res, next) {
 
 // user update
 router.get("/update-user/:id", function(req, res, next){
-  res.render("userupdate" , {user: req.user})
+  res.render("userupdate" , {user:req.user})
 })
 
 // reset password 
@@ -75,6 +79,47 @@ router.post("/reset-password/:id", isLoggedIn, async function (req, res, next) {
       res.send(error);
   }
 });
+
+// multer file upload 
+router.post("/image/:id", upload, isLoggedIn, async function(req , res, next){
+  try {
+    if(req.user.profilepic !== "default.png"){
+      fs.unlinkSync(path.join(__dirname, "..", "public", "image", req.user.profilepic))
+    }
+    req.user.profilepic = req.file.filename
+    await req.user.save()
+    res.redirect(`/update-user/${req.params.id}`);
+  } catch (error) {
+    res.send(error)
+  }
+})
+
+
+// delete user
+
+router.get("/delete-user/:id", isLoggedIn, async function (req, res, next) {
+  try {
+      const deleteduser = await User.findByIdAndDelete(req.params.id);
+
+       if (deleteduser.profilepic !== "default.png") {
+           fs.unlinkSync(
+               path.join(
+                   __dirname,
+                   "..",
+                   "public",
+                   "images",
+                   deleteduser.profilepic
+               )
+           );
+       }
+
+      res.redirect("/login");
+  } catch (error) {
+      res.send(error);
+  }
+});
+
+
 
 // FORGET PASSWORD 
 
