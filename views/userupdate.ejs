@@ -1,54 +1,92 @@
-<%- include("./partials/header") %>
-<%- include("./partials/navbar") %>
+<%- include("./partials/header") %> <%- include("./partials/navbar") %>
 
-<div class=" rounded-xl w-[80%] pt-[3%] m-auto">
-
-    <form action="/image/<%= user._id %>" method="post" class="hidden form-img" enctype="multipart/form-data">
-      <input type="file" class="input-image" name="profilepic">
-    </form>
-
-    <div class="absolute left-[42%]">
-      
-      <a href="/reset-password/<%= user._id %>" class="text-white bg-blue-400 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-3  dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Reset password</a>
-
-    </div>
-
-    <div class="p-5 w-1/2  m-auto flex justify-center">
-      <img class="preview-img w-[20vh] h-[20vh] rounded-full object-cover"
-        src="https://plus.unsplash.com/premium_photo-1694618623649-51733e6001fc?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-        alt="">
-    </div>
-
-    <h1 class="bg-blue-400 w-[50%] rounded-xl p-3 m-auto text-center text-5xl font-extrabold text-white">
-      <%= user.name%>
-
-    </h1>
-
-
-    <form action="/update-user/<%= user._id%>" class="mt-[3%] text-center" method="post">
-      <input class="w-[40%] mb-10  border border-zinc-500 p-3 rounded-md text-xl " type="text" placeholder="full name"
-        value="<%= user.name%>" name="name">
-      <br>
-      <input class="w-[40%] mb-10  border border-zinc-500 p-3 rounded-md text-xl " type="text" placeholder="username"
-        value="<%= user.username%>" name="username">
-      <br>
-      <input class="w-[40%] mb-10  border border-zinc-500 p-3 rounded-md text-xl " type="email"
-        placeholder="email@servive.provider" name="email" value="<%= user.email%>">
-      <br>
-
-      <button
-        class="mt-5 text-center block w-[40%] m-auto hover:bg-blue-600 rounded text-white py-3 px-5 bg-blue-400">Update
-        User Details</button>
+<div class="rounded-xl w-[80%] pt-[3%] m-auto">
+  <form
+    action="/image/<%= user._id %>"
+    method="post"
+    class="formimg hidden form-img"
+    enctype="multipart/form-data">
+    <input type="file" class="input-image" name="profilepic">
   </form>
+
+  <div class="absolute left-[42%]">
+    <a
+      href="/reset-password/<%= user._id %>"
+      class="text-white bg-blue-400 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-3 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+      >Reset password</a
+    >
+  </div>
+
+  <div class="p-5 w-1/2 m-auto flex justify-center">
+    <img
+      class="preview-img w-[20vh] h-[20vh] rounded-full object-cover"
+      src="/images/<%= user.profilepic %>"
+      alt="u"
+    />
+  </div>
+
+  <h1
+    class="bg-blue-400 w-[50%] rounded-xl p-3 m-auto text-center text-5xl font-extrabold text-white"
+  >
+    <%= user.name%>
+  </h1>
+
+  <form
+    action="/update-user/<%= user._id%>"
+    class="mt-[3%] text-center"
+    method="post"
+  >
+    <input
+      class="w-[40%] mb-10 border border-zinc-500 p-3 rounded-md text-xl"
+      type="text"
+      placeholder="full name"
+      value="<%= user.name%>"
+      name="name"
+    />
+    <br />
+    <input
+      class="w-[40%] mb-10 border border-zinc-500 p-3 rounded-md text-xl"
+      type="text"
+      placeholder="username"
+      value="<%= user.username%>"
+      name="username"
+    />
+    <br />
+    <input
+      class="w-[40%] mb-10 border border-zinc-500 p-3 rounded-md text-xl"
+      type="email"
+      placeholder="email@servive.provider"
+      name="email"
+      value="<%= user.email%>"
+    />
+    <br />
+
+    <button
+      class="mt-5 text-center block w-[40%] m-auto hover:bg-blue-600 rounded text-white py-3 px-5 bg-blue-400"
+    >
+      Update User Details
+    </button>
+  </form>
+</div>
+<div class="absolute left-[80%] bottom-2">
+  <a
+    href="/delete-user/<%= user._id %>"
+    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+    >Delete Acoount</a
+  >
 </div>
 
 <script>
-  const inputimage = document.querySelector(".input-image")
-  const previewimage = document.querySelector(".preview-img")
+  const inputimage = document.querySelector(".input-image");
+  const previewimage = document.querySelector(".preview-img");
+  const formimg = document.querySelector(".formimg")
 
-  previewimage.addEventListener("click", function(){
-    inputimage.click()
+  previewimage.addEventListener("click", function () {
+    inputimage.click();
+  });
+
+  inputimage.addEventListener('change', function(){
+    formimg.submit();
   })
-
-</script> 
+</script>
 <%- include("./partials/footer") %>

@@ -5,7 +5,7 @@ const passport = require("passport")
 const LocalStrategy = require("passport-local")
 const fs = require("fs");
 const path = require('path');
-const upload = require('../Utils/multer').single('profilepic');
+const upload = require('../Utils/multer');
 
 
 passport.use(new LocalStrategy(User.authenticate()))
@@ -58,8 +58,8 @@ router.get('/profile',isLoggedIn, function(req, res, next) {
 });
 
 // user update
-router.get("/update-user/:id", function(req, res, next){
-  res.render("userupdate" , {user:req.user})
+router.get("/update-user/:id", isLoggedIn, function(req, res, next){
+  res.render("userupdate" , {user: req.user})
 })
 
 // reset password 
@@ -81,34 +81,61 @@ router.post("/reset-password/:id", isLoggedIn, async function (req, res, next) {
 });
 
 // multer file upload 
-router.post("/image/:id", upload, isLoggedIn, async function(req , res, next){
+// router.post("/image/:id", isLoggedIn, upload, async function(req , res, next){
+//   try {
+//     if(req.user.profilepic !== "default.jpg"){
+//       fs.unlinkSync(path.join(__dirname, "..", "public", "images", req.user.profilepic))
+//     }
+//     req.user.profilepic = req.file.filename
+//     await req.user.save()
+//     res.redirect(`/update-user/${req.params.id}`);
+//   } catch (error) {
+//     res.send(error)
+//   }
+// })
+
+router.post("/image/:id", isLoggedIn, upload.single('profilepic'), async function (req, res, next) {
+  console.log("Upload request received");
   try {
-    if(req.user.profilepic !== "default.png"){
-      fs.unlinkSync(path.join(__dirname, "..", "public", "image", req.user.profilepic))
-    }
-    req.user.profilepic = req.file.filename
-    await req.user.save()
-    res.redirect(`/update-user/${req.params.id}`);
-  } catch (error) {
-    res.send(error)
+    if (req.user.profilepic !== "default.png") {
+      fs.unlinkSync(
+          path.join(
+              __dirname,
+              "..",
+              "public",
+              "images",
+              req.user.profilepic
+          )
+      );
   }
-})
+
+    // Save the new profile picture filename
+    req.user.profilepic = req.file.filename;
+    console.log("Uploaded file: ", req.file.filename);
+    await req.user.save();
+
+    res.send("Profile picture updated successfully");
+  } catch (error) {
+    console.log("Error: ", error);
+    res.status(500).send("An error occurred while uploading the profile picture");
+  }
+});
 
 
 // delete user
 
 router.get("/delete-user/:id", isLoggedIn, async function (req, res, next) {
   try {
-      const deleteduser = await User.findByIdAndDelete(req.params.id);
+      const deleteuser = await User.findByIdAndDelete(req.params.id);
 
-       if (deleteduser.profilepic !== "default.png") {
+       if (deleteuser.profilepic !== "default.png") {
            fs.unlinkSync(
                path.join(
                    __dirname,
                    "..",
                    "public",
                    "images",
-                   deleteduser.profilepic
+                   deleteuser.profilepic
                )
            );
        }
